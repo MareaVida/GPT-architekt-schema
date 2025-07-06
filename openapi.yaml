@@ -82,7 +82,6 @@ paths:
 
 components:
   schemas:
-
     CreateGptRequest:
       type: object
       properties:
