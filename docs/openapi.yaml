@@ -1,7 +1,7 @@
 openapi: 3.1.0
 servers:
-  - url: https://raw.githubusercontent.com/mareavida/gpt-architekt-schema/main
-    description: Raw GitHub–Endpoint für GPT-Architekt Actions
+  - url: https://mareavida.github.io/gpt-architekt-schema
+    description: GitHub Pages–Endpoint
 
 info:
   title: GPT-Architekt Actions
