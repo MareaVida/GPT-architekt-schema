@@ -1,7 +1,7 @@
 openapi: 3.1.0
 servers:
-  - url: https://mareavida.github.io/gpt-architekt-schema
-    description: GitHub Pages–Endpoint für GPT-Architekt Actions
+  - url: https://raw.githubusercontent.com/mareavida/gpt-architekt-schema/main
+    description: Raw GitHub-URL für GPT-Architekt Actions
 
 info:
   title: GPT-Architekt Actions
@@ -19,24 +19,16 @@ paths:
             schema:
               type: object
               properties:
-                name:
-                  type: string
-                  description: Desired name of the new GPT
-                system_prompt:
-                  type: string
-                  description: System prompt text
-                developer_prompt:
-                  type: string
-                  description: Developer prompt text
+                name:           { type: string }
+                system_prompt:  { type: string }
+                developer_prompt:{ type: string }
                 prompt_starters:
                   type: array
-                  items:
-                    type: string
-                  description: List of starter prompts
+                  items: { type: string }
               required: [name, system_prompt]
       responses:
         '200':
-          description: GPT created successfully
+          description: Erfolgreich erstellt
           content:
             application/json:
               schema:
@@ -55,7 +47,6 @@ paths:
           text/plain:
             schema:
               type: string
-              description: The blueprint Markdown text
       responses:
         '200':
           description: Lint result
@@ -80,9 +71,7 @@ paths:
             schema:
               type: object
               properties:
-                message:
-                  type: string
-                  description: Potentially abusive user message
+                message: { type: string }
       responses:
         '200':
           description: Attack logged
