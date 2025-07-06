@@ -1,7 +1,7 @@
 openapi: 3.1.0
 servers:
   - url: https://raw.githubusercontent.com/mareavida/gpt-architekt-schema/main
-    description: Raw GitHub-URL für GPT-Architekt Actions
+    description: Raw GitHub–Endpoint für GPT-Architekt Actions
 
 info:
   title: GPT-Architekt Actions
@@ -17,25 +17,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:           { type: string }
-                system_prompt:  { type: string }
-                developer_prompt:{ type: string }
-                prompt_starters:
-                  type: array
-                  items: { type: string }
-              required: [name, system_prompt]
+              $ref: '#/components/schemas/CreateGptRequest'
       responses:
         '200':
-          description: Erfolgreich erstellt
+          description: GPT created successfully
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  gpt_id: { type: string }
-                  url:    { type: string }
+                $ref: '#/components/schemas/CreateGptResponse'
 
   /lint_blueprint:
     post:
@@ -46,19 +35,14 @@ paths:
         content:
           text/plain:
             schema:
-              type: string
+              $ref: '#/components/schemas/LintBlueprintRequest'
       responses:
         '200':
           description: Lint result
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  score:       { type: integer }
-                  suggestions:
-                    type: array
-                    items: { type: string }
+                $ref: '#/components/schemas/LintBlueprintResponse'
 
   /simulate_attack:
     post:
@@ -69,18 +53,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                message: { type: string }
+              $ref: '#/components/schemas/SimulateAttackRequest'
       responses:
         '200':
           description: Attack logged
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  logged: { type: boolean }
+                $ref: '#/components/schemas/SimulateAttackResponse'
 
   /submit_rating:
     post:
@@ -91,17 +71,86 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                blueprint_id: { type: string }
-                stars:        { type: integer }
-                comments:     { type: string }
+              $ref: '#/components/schemas/SubmitRatingRequest'
       responses:
         '200':
           description: Rating stored
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  stored: { type: boolean }
+                $ref: '#/components/schemas/SubmitRatingResponse'
+
+components:
+  schemas:
+
+    CreateGptRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Desired name of the new GPT
+        system_prompt:
+          type: string
+          description: System prompt text
+        developer_prompt:
+          type: string
+          description: Developer prompt text
+        prompt_starters:
+          type: array
+          items:
+            type: string
+          description: List of starter prompts
+      required:
+        - name
+        - system_prompt
+
+    CreateGptResponse:
+      type: object
+      properties:
+        gpt_id:
+          type: string
+        url:
+          type: string
+
+    LintBlueprintRequest:
+      type: string
+      description: The blueprint Markdown text
+
+    LintBlueprintResponse:
+      type: object
+      properties:
+        score:
+          type: integer
+        suggestions:
+          type: array
+          items:
+            type: string
+
+    SimulateAttackRequest:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Potentially abusive user message
+
+    SimulateAttackResponse:
+      type: object
+      properties:
+        logged:
+          type: boolean
+
+    SubmitRatingRequest:
+      type: object
+      properties:
+        blueprint_id:
+          type: string
+        stars:
+          type: integer
+        comments:
+          type: string
+
+    SubmitRatingResponse:
+      type: object
+      properties:
+        stored:
+          type: boolean
