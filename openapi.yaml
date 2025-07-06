@@ -1,0 +1,118 @@
+openapi: 3.0.1
+info:
+  title: GPT-Architekt Actions
+  version: 1.0.0
+paths:
+  /create_gpt:
+    post:
+      summary: Create a new Custom GPT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Desired name of the new GPT
+                system_prompt:
+                  type: string
+                  description: System prompt text
+                developer_prompt:
+                  type: string
+                  description: Developer prompt text
+                prompt_starters:
+                  type: array
+                  items:
+                    type: string
+                  description: List of starter prompts
+              required: [name, system_prompt]
+      responses:
+        '200':
+          description: GPT created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  gpt_id:
+                    type: string
+                  url:
+                    type: string
+
+  /lint_blueprint:
+    post:
+      summary: Lint and score a GPT blueprint
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: The blueprint Markdown text
+      responses:
+        '200':
+          description: Lint result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  score:
+                    type: integer
+                  suggestions:
+                    type: array
+                    items:
+                      type: string
+
+
+/simulate_attack:
+  post:
+    summary: Log a potential jailbreak or abuse attempt
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Potentially abusive user message
+    responses:
+      '200':
+        description: Attack logged
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                logged: {type: boolean}
+
+
+/submit_rating:
+  post:
+    summary: Submit user rating for a blueprint
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              blueprint_id:
+                type: string
+              stars:
+                type: integer
+              comments:
+                type: string
+    responses:
+      '200':
+        description: Rating stored
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stored: {type: boolean}
