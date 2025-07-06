@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.1.0
 servers:
-  - url: https://MareaVida.github.io/gpt-architekt-schema
+  - url: https://mareavida.github.io/gpt-architekt-schema
     description: GitHub Pages–Endpoint für GPT-Architekt Actions
 
 info:
@@ -10,6 +10,7 @@ info:
 paths:
   /create_gpt:
     post:
+      operationId: createGpt
       summary: Create a new Custom GPT
       requestBody:
         required: true
@@ -41,13 +42,12 @@ paths:
               schema:
                 type: object
                 properties:
-                  gpt_id:
-                    type: string
-                  url:
-                    type: string
+                  gpt_id: { type: string }
+                  url:    { type: string }
 
   /lint_blueprint:
     post:
+      operationId: lintBlueprint
       summary: Lint and score a GPT blueprint
       requestBody:
         required: true
@@ -64,15 +64,14 @@ paths:
               schema:
                 type: object
                 properties:
-                  score:
-                    type: integer
+                  score:       { type: integer }
                   suggestions:
                     type: array
-                    items:
-                      type: string
+                    items: { type: string }
 
   /simulate_attack:
     post:
+      operationId: simulateAttack
       summary: Log a potential jailbreak or abuse attempt
       requestBody:
         required: true
@@ -92,11 +91,11 @@ paths:
               schema:
                 type: object
                 properties:
-                  logged:
-                    type: boolean
+                  logged: { type: boolean }
 
   /submit_rating:
     post:
+      operationId: submitRating
       summary: Submit user rating for a blueprint
       requestBody:
         required: true
@@ -105,12 +104,9 @@ paths:
             schema:
               type: object
               properties:
-                blueprint_id:
-                  type: string
-                stars:
-                  type: integer
-                comments:
-                  type: string
+                blueprint_id: { type: string }
+                stars:        { type: integer }
+                comments:     { type: string }
       responses:
         '200':
           description: Rating stored
@@ -119,5 +115,4 @@ paths:
               schema:
                 type: object
                 properties:
-                  stored:
-                    type: boolean
+                  stored: { type: boolean }
