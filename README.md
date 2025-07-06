@@ -1,0 +1,1 @@
+# GPT-architekt-schema
