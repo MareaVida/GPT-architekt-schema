@@ -1,7 +1,12 @@
 openapi: 3.0.1
+servers:
+  - url: https://MareaVida.github.io/gpt-architekt-schema
+    description: GitHub Pages–Endpoint für GPT-Architekt Actions
+
 info:
   title: GPT-Architekt Actions
   version: 1.0.0
+
 paths:
   /create_gpt:
     post:
@@ -66,53 +71,53 @@ paths:
                     items:
                       type: string
 
-
-/simulate_attack:
-  post:
-    summary: Log a potential jailbreak or abuse attempt
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Potentially abusive user message
-    responses:
-      '200':
-        description: Attack logged
+  /simulate_attack:
+    post:
+      summary: Log a potential jailbreak or abuse attempt
+      requestBody:
+        required: true
         content:
           application/json:
             schema:
               type: object
               properties:
-                logged: {type: boolean}
+                message:
+                  type: string
+                  description: Potentially abusive user message
+      responses:
+        '200':
+          description: Attack logged
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logged:
+                    type: boolean
 
-
-/submit_rating:
-  post:
-    summary: Submit user rating for a blueprint
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              blueprint_id:
-                type: string
-              stars:
-                type: integer
-              comments:
-                type: string
-    responses:
-      '200':
-        description: Rating stored
+  /submit_rating:
+    post:
+      summary: Submit user rating for a blueprint
+      requestBody:
+        required: true
         content:
           application/json:
             schema:
               type: object
               properties:
-                stored: {type: boolean}
+                blueprint_id:
+                  type: string
+                stars:
+                  type: integer
+                comments:
+                  type: string
+      responses:
+        '200':
+          description: Rating stored
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stored:
+                    type: boolean
